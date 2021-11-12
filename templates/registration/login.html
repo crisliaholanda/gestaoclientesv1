@@ -1,6 +1,18 @@
+{% extends 'base.html'%}
+{% load bootstrap %}
+{% block title %}Página de login{% endblock %}
+{% block content %}
 <h2>Login</h2>
 <form method="post">
      {% csrf_token %}
-     {{form.as_p}}
-     <button type="submit">Login</button>
+     {{form|bootstrap}}
+     <button  class="btn btn-info" type="submit">Login</button>
 </form>
+{% endblock %}
+{% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Criado por Crys</span>
+        </div>
+    </footer>
+{% endblock %}

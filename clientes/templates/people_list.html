@@ -1,24 +1,56 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-    <title>Persons</title>
-</head>
-<body id="background">
-        <h1 class="text-title ">Lista de pessoas</h1>
-        <a href="{% url 'logout' %}">Logout</a>
-        {% for p in persons%}
-        <p class="name">{{p.first_name}} {{p.last_name}} |<a class="link" href="{% url 'persorns_update' p.id %'}">editar</a>| 
-            <a class="link" href="{% url 'persorns_delete' p.id %}">deletar</a>
-        </p>
+
+{% block title %}Tela Inicial{% endblock %}
+{% block main %}
+<div class="row">
+        <div class="col-12">
+                <form action="" class="form-group">
+                       Nome <input type="text" name="nome" id="nome" class="form-control">
+                        Sobrenome<input type="text" name="sobrenome" id="sobenome" class="form-control">
+                       
+                        <button>buscar</button>
+                </form>
+        </div>
         
-        {% endfor %}
-        <br/>
-        <br/>
-        <a class="link" href="{% url 'persorns_new'%}">novo</a>
-</body>
-</html>
+
+        </div>
+
+<div class="row">
+  
+        <div class="col col-md">
+                <h2 class="text-title ">Lista de pessoas</h2>   
+                {% for p in persons%}
+
+                <ul class="list-group">
+                        <li class="list-group-item">
+                                {{p.first_name}} {{p.last_name}} 
+                                <a class="btn btn-secondary" href="{% url 'update' p.id %}">
+                                        <img class="img-size" src="{% static 'img/edit.png' %}"></img></a>
+                                <a class="btn btn-danger" href="{% url 'persorns_delete' p.id %}">
+                                        <img class="img-size" src="{% static 'img/trash.png' %}"></img></a>
+                        </li>
+                </ul>
+                {% endfor %}
+                
+                <br/>
+                <br/>
+                <a  class="btn btn-primary" href="{% url 'persorns_new'%}">  
+                        <img class="img-size" style="width:30px; height:30px;" src="{% static 'img/plus.png' %}"></img>  novo</a>
+        </div>
+        <div class="col">
+                {% if user.is_authenticated %}
+                        <h3 class="text-title">Bem-Vindo(a) {{user.username}}</h3>
+                        <a class="btn btn-light" href="{% url 'logout' %}">Logout</a>
+                {% endif%}
+        </div>
+</div>
+       
+{% endblock %}
+{% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Criado por Crys</span>
+        </div>
+    </footer>
+{% endblock %}

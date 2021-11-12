@@ -1,5 +1,5 @@
 #background{
-    background-color: rgb(165, 144, 144);
+    background-color: rgb(255, 255, 255);
 }
 .text-title {
     color: rgb(38, 45, 77);
@@ -9,14 +9,23 @@ p.name{
     font-size: 20px;
     color: #0f1216
 }
-a.link {
-    font-size: 20px;
-    text-decoration: none;
+.img-size {
+    width:30px;
+    height:30px;
+    float:right;   
+    position: relative;
 }
-a.link ::before {
-    color:rgb(34, 0, 126);
-    
+.btn-secondary{
+    float:right;
+    margin: 2px;
 }
-a.link {
-    color: #110041;
+.btn-danger{
+    float:right;
+    margin: 2px;
+}
+.col-md {
+    background-color: aliceblue;
+}
+.col {
+    background-color: aliceblue;
 }

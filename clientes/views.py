@@ -5,12 +5,24 @@ from .form import PersonForm
 
 @login_required
 def persorns_list(request):
-    persons = Person.objects.all()
+    nome = request.GET.get('nome', None)
+    sobrenome = request.GET.get('sobrenome', None)
 
-    context = {
-        'persons': persons,
-    }
-    return render(request, 'people_list.html', context)
+    '''
+    para check box
+    request.GET.get('check-box', None) > {str}'on'
+    if check-box == 'on':
+        persons.objects.filter(ativo=True)
+    '''
+  
+    
+    if nome or sobrenome:
+        # persons = Person.objects.filter(first_name__icontains=nome, last_name__icontains=sobrenome)
+        persons = Person.objects.filter(first_name__icontains=nome) | Person.objects.filter(last_name__icontains=sobrenome)
+    else:
+      persons = Person.objects.all()
+
+    return render(request, 'people_list.html', {'persons': persons,})
 
 @login_required
 def persorns_new(request):
@@ -24,13 +36,11 @@ def persorns_new(request):
         'form': form,
     }
     return render(request, 'person_form.html', context)
-
 @login_required
 def persorns_update(request, id):
-    person =get_object_or_404(Person, pk=id)
-    form = PersonForm(request.POST or None, request.FILES or None,
-    instance=person)
-
+    person = get_object_or_404(Person, pk=id)
+    form = PersonForm(request.POST or None, request.FILES or None, instance=person)
+    
     if form.is_valid():
         form.save()
         return redirect('persorns_list')
@@ -38,7 +48,9 @@ def persorns_update(request, id):
     context = {
         'form': form,
     }
-    return render(request, 'peson_form.html', context)
+    print('aaaaaaaaaaa')
+    return render(request, 'person_form.html', context)
+
 
 @login_required
 def persorns_delete(request, id):
